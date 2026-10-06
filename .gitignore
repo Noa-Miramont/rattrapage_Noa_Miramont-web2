@@ -1,0 +1,29 @@
+# Environnements virtuels et dépendances installées
+.venv/
+venv/
+node_modules/
+
+# Caches et artefacts Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+build/
+dist/
+
+# Secrets : seul .env.example est versionné
+.env
+.env.*
+!.env.example
+
+# Sorties générées en local (les preuves versionnées sont dans preuves/)
+sortie/
+
+# Fichiers d'éditeur et de système
+.DS_Store
+.idea/
+.vscode/
