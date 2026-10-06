@@ -1,0 +1,4 @@
+{"source_line":7,"id":"bad1","motif":"title vide"}
+{"source_line":8,"id":"bad2","motif":"date invalide: 2026-02-30"}
+{"source_line":9,"id":"bad3","motif":"period invalide: soir"}
+{"source_line":12,"id":null,"motif":"JSON malformé"}
