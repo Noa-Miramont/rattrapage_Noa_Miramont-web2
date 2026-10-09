@@ -1,0 +1,49 @@
+$ python -m i4_webhooks.demo
+== Santé des deux services
+  récepteur  GET /health -> {'status': 'ok'}
+  partenaire GET /health -> {'status': 'ok', 'mode': 'ok'}
+
+== Livraison d'un événement signé, pour chaque mode du partenaire
+- mode ok : POST -> 202 {'event_id': 'demo-ok-e64df8', 'duplicate': False}
+  GET /deliveries/demo-ok-e64df8 -> {'event_id': 'demo-ok-e64df8', 'status': 'delivered', 'attempts': 1, 'last_error': None} (après 0.1 s)
+  [OK] statut et tentatives : observé ('delivered', 1), attendu ('delivered', 1)
+- mode flaky : POST -> 202 {'event_id': 'demo-flaky-e64df8', 'duplicate': False}
+  GET /deliveries/demo-flaky-e64df8 -> {'event_id': 'demo-flaky-e64df8', 'status': 'delivered', 'attempts': 2, 'last_error': None} (après 0.3 s)
+  [OK] statut et tentatives : observé ('delivered', 2), attendu ('delivered', 2)
+- mode down : POST -> 202 {'event_id': 'demo-down-e64df8', 'duplicate': False}
+  GET /deliveries/demo-down-e64df8 -> {'event_id': 'demo-down-e64df8', 'status': 'quarantine', 'attempts': 3, 'last_error': 'http 503'} (après 0.6 s)
+  [OK] statut et tentatives : observé ('quarantine', 3), attendu ('quarantine', 3)
+- mode slow : POST -> 202 {'event_id': 'demo-slow-e64df8', 'duplicate': False}
+  GET /deliveries/demo-slow-e64df8 -> {'event_id': 'demo-slow-e64df8', 'status': 'quarantine', 'attempts': 3, 'last_error': 'timeout'} (après 6.7 s)
+  [OK] statut et tentatives : observé ('quarantine', 3), attendu ('quarantine', 3)
+- mode reject : POST -> 202 {'event_id': 'demo-reject-e64df8', 'duplicate': False}
+  GET /deliveries/demo-reject-e64df8 -> {'event_id': 'demo-reject-e64df8', 'status': 'quarantine', 'attempts': 1, 'last_error': 'http 400'} (après 0.1 s)
+  [OK] statut et tentatives : observé ('quarantine', 1), attendu ('quarantine', 1)
+
+== Répétition d'un événement déjà accepté
+  POST demo-ok-e64df8 une seconde fois -> 200 {'event_id': 'demo-ok-e64df8', 'duplicate': True}
+  [OK] réponse : observé (200, True), attendu (200, True)
+  [OK] appels reçus par le partenaire (aucune nouvelle livraison) : observé 1, attendu 1
+
+== Requêtes refusées
+  signature calculée avec un autre secret -> 401 {'detail': 'signature invalide'}
+  [OK] code HTTP : observé 401, attendu 401
+  X-Timestamp vieux de 301 s -> 401 {'detail': 'X-Timestamp hors de la fenêtre de 300 s'}
+  [OK] code HTTP : observé 401, attendu 401
+  corps de 64 Ko + 1 octet -> 413 {'detail': 'corps supérieur à 65536 octets'}
+  [OK] code HTTP : observé 413, attendu 413
+  séance AUTO avec un formateur -> 400 {'detail': 'événement invalide', 'erreurs': ['session: Value error, mode AUTO exige teacherId null et status proposed']}
+  [OK] code HTTP : observé 400, attendu 400
+
+== Côté partenaire : appels reçus et tickets créés (un ticket au plus par Idempotency-Key)
+  demo-ok-e64df8         1 appel(s) -> ticket T-0001
+  demo-flaky-e64df8      2 appel(s) -> ticket T-0002
+  demo-down-e64df8       3 appel(s) -> ticket aucun
+  demo-slow-e64df8       3 appel(s) -> ticket T-0003
+  demo-reject-e64df8     1 appel(s) -> ticket aucun
+  Mode slow : le récepteur a abandonné chaque tentative au bout de 2 s, mais le partenaire a
+  terminé le traitement de son côté. Les 3 appels portaient la même Idempotency-Key : un seul ticket.
+  [OK] mode slow, appels reçus et tickets créés : observé (3, 1), attendu (3, 1)
+
+Bilan : 12/12 vérifications conformes
+(code retour : 0)
