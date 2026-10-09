@@ -1,0 +1,44 @@
+$ uvicorn i4_webhooks.partenaire:creer_app --factory --port 8001
+INFO:     Started server process [30593]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+INFO:     127.0.0.1:61296 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61298 - "GET /health HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:35.378+00:00", "niveau": "INFO", "evenement": "partenaire.mode", "mode": "ok"}
+INFO:     127.0.0.1:61298 - "PUT /mode HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:35.409+00:00", "niveau": "INFO", "evenement": "partenaire.ticket_cree", "event_id": "demo-ok-e64df8", "ticket_id": "T-0001"}
+INFO:     127.0.0.1:61299 - "POST /tickets HTTP/1.1" 201 Created
+{"horodatage": "2026-10-06T09:29:35.527+00:00", "niveau": "INFO", "evenement": "partenaire.mode", "mode": "flaky"}
+INFO:     127.0.0.1:61298 - "PUT /mode HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:35.576+00:00", "niveau": "WARNING", "evenement": "partenaire.refus", "event_id": "demo-flaky-e64df8", "statut_http": 503, "mode": "flaky"}
+INFO:     127.0.0.1:61300 - "POST /tickets HTTP/1.1" 503 Service Unavailable
+{"horodatage": "2026-10-06T09:29:35.779+00:00", "niveau": "INFO", "evenement": "partenaire.ticket_cree", "event_id": "demo-flaky-e64df8", "ticket_id": "T-0002"}
+INFO:     127.0.0.1:61300 - "POST /tickets HTTP/1.1" 201 Created
+{"horodatage": "2026-10-06T09:29:35.873+00:00", "niveau": "INFO", "evenement": "partenaire.mode", "mode": "down"}
+INFO:     127.0.0.1:61298 - "PUT /mode HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:35.878+00:00", "niveau": "WARNING", "evenement": "partenaire.refus", "event_id": "demo-down-e64df8", "statut_http": 503, "mode": "down"}
+INFO:     127.0.0.1:61302 - "POST /tickets HTTP/1.1" 503 Service Unavailable
+{"horodatage": "2026-10-06T09:29:36.083+00:00", "niveau": "WARNING", "evenement": "partenaire.refus", "event_id": "demo-down-e64df8", "statut_http": 503, "mode": "down"}
+INFO:     127.0.0.1:61302 - "POST /tickets HTTP/1.1" 503 Service Unavailable
+{"horodatage": "2026-10-06T09:29:36.488+00:00", "niveau": "WARNING", "evenement": "partenaire.refus", "event_id": "demo-down-e64df8", "statut_http": 503, "mode": "down"}
+INFO:     127.0.0.1:61302 - "POST /tickets HTTP/1.1" 503 Service Unavailable
+{"horodatage": "2026-10-06T09:29:36.525+00:00", "niveau": "INFO", "evenement": "partenaire.mode", "mode": "slow"}
+INFO:     127.0.0.1:61298 - "PUT /mode HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:39.532+00:00", "niveau": "INFO", "evenement": "partenaire.ticket_cree", "event_id": "demo-slow-e64df8", "ticket_id": "T-0003"}
+{"horodatage": "2026-10-06T09:29:41.736+00:00", "niveau": "INFO", "evenement": "partenaire.ticket_rejoue", "event_id": "demo-slow-e64df8", "ticket_id": "T-0003"}
+{"horodatage": "2026-10-06T09:29:43.197+00:00", "niveau": "INFO", "evenement": "partenaire.mode", "mode": "reject"}
+INFO:     127.0.0.1:61345 - "PUT /mode HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:43.204+00:00", "niveau": "WARNING", "evenement": "partenaire.refus", "event_id": "demo-reject-e64df8", "statut_http": 400, "mode": "reject"}
+INFO:     127.0.0.1:61346 - "POST /tickets HTTP/1.1" 400 Bad Request
+{"horodatage": "2026-10-06T09:29:43.313+00:00", "niveau": "INFO", "evenement": "partenaire.mode", "mode": "ok"}
+INFO:     127.0.0.1:61345 - "PUT /mode HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61345 - "GET /appels HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61345 - "GET /appels HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61345 - "GET /appels HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61345 - "GET /tickets HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:44.140+00:00", "niveau": "INFO", "evenement": "partenaire.ticket_rejoue", "event_id": "demo-slow-e64df8", "ticket_id": "T-0003"}
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [30593]

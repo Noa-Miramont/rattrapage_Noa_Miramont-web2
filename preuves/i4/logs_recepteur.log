@@ -1,0 +1,130 @@
+$ uvicorn i4_webhooks.recepteur:creer_app --factory --port 8000 --env-file .env
+INFO:     Loading environment from '.env'
+INFO:     Started server process [30594]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:61295 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /health HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:35.379+00:00", "niveau": "INFO", "evenement": "webhook.accepte", "event_id": "demo-ok-e64df8"}
+INFO:     127.0.0.1:61297 - "POST /webhooks/planning HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-ok-e64df8 HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:35.410+00:00", "niveau": "INFO", "evenement": "livraison.tentative", "event_id": "demo-ok-e64df8", "tentative": 1, "resultat": "http 201"}
+{"horodatage": "2026-10-06T09:29:35.410+00:00", "niveau": "INFO", "evenement": "livraison.livree", "event_id": "demo-ok-e64df8", "tentatives": 1}
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-ok-e64df8 HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:35.544+00:00", "niveau": "INFO", "evenement": "webhook.accepte", "event_id": "demo-flaky-e64df8"}
+INFO:     127.0.0.1:61297 - "POST /webhooks/planning HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-flaky-e64df8 HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:35.577+00:00", "niveau": "INFO", "evenement": "livraison.tentative", "event_id": "demo-flaky-e64df8", "tentative": 1, "resultat": "http 503"}
+{"horodatage": "2026-10-06T09:29:35.577+00:00", "niveau": "INFO", "evenement": "livraison.reprise", "event_id": "demo-flaky-e64df8", "tentative": 1, "attente_s": 0.2}
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-flaky-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-flaky-e64df8 HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:35.780+00:00", "niveau": "INFO", "evenement": "livraison.tentative", "event_id": "demo-flaky-e64df8", "tentative": 2, "resultat": "http 201"}
+{"horodatage": "2026-10-06T09:29:35.780+00:00", "niveau": "INFO", "evenement": "livraison.livree", "event_id": "demo-flaky-e64df8", "tentatives": 2}
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-flaky-e64df8 HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:35.875+00:00", "niveau": "INFO", "evenement": "webhook.accepte", "event_id": "demo-down-e64df8"}
+INFO:     127.0.0.1:61297 - "POST /webhooks/planning HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-down-e64df8 HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:35.879+00:00", "niveau": "INFO", "evenement": "livraison.tentative", "event_id": "demo-down-e64df8", "tentative": 1, "resultat": "http 503"}
+{"horodatage": "2026-10-06T09:29:35.879+00:00", "niveau": "INFO", "evenement": "livraison.reprise", "event_id": "demo-down-e64df8", "tentative": 1, "attente_s": 0.2}
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-down-e64df8 HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:36.084+00:00", "niveau": "INFO", "evenement": "livraison.tentative", "event_id": "demo-down-e64df8", "tentative": 2, "resultat": "http 503"}
+{"horodatage": "2026-10-06T09:29:36.085+00:00", "niveau": "INFO", "evenement": "livraison.reprise", "event_id": "demo-down-e64df8", "tentative": 2, "attente_s": 0.4}
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-down-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-down-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-down-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-down-e64df8 HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:36.491+00:00", "niveau": "INFO", "evenement": "livraison.tentative", "event_id": "demo-down-e64df8", "tentative": 3, "resultat": "http 503"}
+{"horodatage": "2026-10-06T09:29:36.491+00:00", "niveau": "WARNING", "evenement": "livraison.quarantaine", "event_id": "demo-down-e64df8", "tentatives": 3, "raison": "http 503"}
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-down-e64df8 HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:36.526+00:00", "niveau": "INFO", "evenement": "webhook.accepte", "event_id": "demo-slow-e64df8"}
+INFO:     127.0.0.1:61297 - "POST /webhooks/planning HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:38.530+00:00", "niveau": "INFO", "evenement": "livraison.tentative", "event_id": "demo-slow-e64df8", "tentative": 1, "resultat": "timeout"}
+{"horodatage": "2026-10-06T09:29:38.530+00:00", "niveau": "INFO", "evenement": "livraison.reprise", "event_id": "demo-slow-e64df8", "tentative": 1, "attente_s": 0.2}
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:40.734+00:00", "niveau": "INFO", "evenement": "livraison.tentative", "event_id": "demo-slow-e64df8", "tentative": 2, "resultat": "timeout"}
+{"horodatage": "2026-10-06T09:29:40.734+00:00", "niveau": "INFO", "evenement": "livraison.reprise", "event_id": "demo-slow-e64df8", "tentative": 2, "attente_s": 0.4}
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:43.136+00:00", "niveau": "INFO", "evenement": "livraison.tentative", "event_id": "demo-slow-e64df8", "tentative": 3, "resultat": "timeout"}
+{"horodatage": "2026-10-06T09:29:43.137+00:00", "niveau": "WARNING", "evenement": "livraison.quarantaine", "event_id": "demo-slow-e64df8", "tentatives": 3, "raison": "timeout"}
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-slow-e64df8 HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:43.200+00:00", "niveau": "INFO", "evenement": "webhook.accepte", "event_id": "demo-reject-e64df8"}
+INFO:     127.0.0.1:61297 - "POST /webhooks/planning HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-reject-e64df8 HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:43.206+00:00", "niveau": "INFO", "evenement": "livraison.tentative", "event_id": "demo-reject-e64df8", "tentative": 1, "resultat": "http 400"}
+{"horodatage": "2026-10-06T09:29:43.206+00:00", "niveau": "WARNING", "evenement": "livraison.quarantaine", "event_id": "demo-reject-e64df8", "tentatives": 1, "raison": "http 400"}
+INFO:     127.0.0.1:61297 - "GET /deliveries/demo-reject-e64df8 HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:43.318+00:00", "niveau": "INFO", "evenement": "webhook.doublon", "event_id": "demo-ok-e64df8"}
+INFO:     127.0.0.1:61297 - "POST /webhooks/planning HTTP/1.1" 200 OK
+{"horodatage": "2026-10-06T09:29:43.321+00:00", "niveau": "WARNING", "evenement": "webhook.rejete", "statut_http": 401, "raison": "signature invalide"}
+INFO:     127.0.0.1:61297 - "POST /webhooks/planning HTTP/1.1" 401 Unauthorized
+{"horodatage": "2026-10-06T09:29:43.322+00:00", "niveau": "WARNING", "evenement": "webhook.rejete", "statut_http": 401, "raison": "X-Timestamp hors de la fenêtre de 300 s"}
+INFO:     127.0.0.1:61297 - "POST /webhooks/planning HTTP/1.1" 401 Unauthorized
+{"horodatage": "2026-10-06T09:29:43.323+00:00", "niveau": "WARNING", "evenement": "webhook.rejete", "statut_http": 413, "raison": "corps supérieur à 65536 octets"}
+INFO:     127.0.0.1:61297 - "POST /webhooks/planning HTTP/1.1" 413 Content Too Large
+{"horodatage": "2026-10-06T09:29:43.325+00:00", "niveau": "WARNING", "evenement": "webhook.rejete", "statut_http": 400, "raison": "événement invalide"}
+INFO:     127.0.0.1:61297 - "POST /webhooks/planning HTTP/1.1" 400 Bad Request
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [30594]
