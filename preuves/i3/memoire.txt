@@ -1,0 +1,8 @@
+$ python -m i3_flux.mesure_memoire
+  lignes    fichier  id distincts  pic mémoire
+   10000     1.6 Mo            10       422 Ko
+   10000     1.6 Mo         10000      1375 Ko
+  100000    16.1 Mo            10       404 Ko
+  100000    16.5 Mo        100000     10163 Ko
+  200000    32.2 Mo            10       400 Ko
+  200000    33.1 Mo        200000     19962 Ko

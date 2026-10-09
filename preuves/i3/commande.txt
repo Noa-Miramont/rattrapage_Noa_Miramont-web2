@@ -1,0 +1,18 @@
+$ python -m i3_flux data/seances.ndjson --sortie ../preuves/i3 --details
+ligne   1  accepte   s01
+ligne   2  accepte   s02
+ligne   3  accepte   s03
+ligne   4  doublon   s01
+ligne   5  accepte   s04
+ligne   6  accepte   s05
+ligne   7  rejet     bad1  (title vide)
+ligne   8  rejet     bad2  (date invalide: 2026-02-30)
+ligne   9  rejet     bad3  (period invalide: soir)
+ligne  10  doublon   s02
+ligne  11  accepte   s06
+ligne  12  rejet     -  (JSON malformé)
+lus=12 acceptes=6 rejets=4 doublons=2
+../preuves/i3/acceptes.ndjson
+../preuves/i3/rejets.ndjson
+../preuves/i3/stats.json
+(code retour : 0)
