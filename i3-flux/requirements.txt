@@ -1,0 +1,3 @@
+# Le pipeline I3 n'utilise que la bibliothèque standard Python.
+# Seul l'outil de test est nécessaire.
+pytest==9.1.1
