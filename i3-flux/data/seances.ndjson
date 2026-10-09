@@ -1,0 +1,12 @@
+{"id":"s01","date":"19/10/2026","period":"matin","group":"A","mode":"DG","title":"React composants","domain":"web","teacherId":"t1","status":"confirme"}
+{"id":"s02","date":"2026-10-19","period":"am","group":"B","mode":"DG","title":"React événements","domain":"web","teacherId":"t2","status":"confirmed"}
+{"id":"s03","date":"2026-10-19","period":"pm","group":"Promotion","mode":"CE","title":"Données et SQL","domain":"data","teacherId":"t1","status":"confirmed"}
+{"id":"s01","date":"2026-10-19","period":"am","group":"A","mode":"DG","title":"Copie React","domain":"web","teacherId":"t1","status":"confirmed"}
+{"id":"s04","date":"20/10/2026","period":"matin","group":"A","mode":"DG","title":"Authentification","domain":"cyber","teacherId":"t2","status":"propose"}
+{"id":"s05","date":"2026-10-20","period":"am","group":"B","mode":"DG","title":"Revue de projet","domain":"projet","teacherId":"t3","status":"proposed"}
+{"id":"bad1","date":"2026-10-20","period":"pm","group":"Promotion","mode":"AUTO","title":"","domain":"projet","teacherId":null,"status":"proposed"}
+{"id":"bad2","date":"2026-02-30","period":"am","group":"A","mode":"DG","title":"Date invalide","domain":"web","teacherId":"t1","status":"proposed"}
+{"id":"bad3","date":"2026-10-20","period":"soir","group":"A","mode":"DG","title":"Période invalide","domain":"web","teacherId":"t1","status":"proposed"}
+{"id":"s02","date":"2026-10-19","period":"am","group":"B","mode":"DG","title":"Copie B","domain":"web","teacherId":"t2","status":"confirmed"}
+{"id":"s06","date":"2026-10-20","period":"après-midi","group":"Promotion","mode":"AUTO","title":"Travail autonome","domain":"projet","teacherId":null,"status":"proposed"}
+{"id":"bad4","title":"JSON tronqué"
